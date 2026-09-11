@@ -2,7 +2,7 @@
 import { useState, useMemo } from "react"
 
 const PLAZAS = [
-  {id:1, distrito:"JESUS MARIA", tag:"DESTACADA", estado:"VERIFICADO", live:true, nombre:"CLASIFICATORIA 08", fecha:"DOM 13 SET", fechaISO:"2026-02-15", hora:"4:30PM", lugar:"CAMPO DE MARTE - ENTRADA AV. SALAVERRY", tipo:"PLAZA", visitas:126, img: "/plazas/cdmacape.webp", data:{LUGAR:"CAMPO DE MARTE - ENTRADA AV. SALAVERRY", HORA:"4:30 PM", FECHA:"DOMINGO 13 DE SETIEMBRE", INSCRIPCION:"s/5 - s/7 filtros", HOST:"NATAN - ZK", JURADOS:"LOA - KEDRIC - BEEF", PREMIO:"100 SOLES<br /> CUPO A NACIONAL <br /> s/400 rumbo a la internacional"}},
+  {id:1, distrito:"JESUS MARIA", tag:"DESTACADA", estado:"VERIFICADO", live:true, nombre:"CLASIFICATORIA 08", fecha:"DOM 13 SET", fechaISO:"2026-02-15", hora:"4:30PM", lugar:"CAMPO DE MARTE - ENTRADA AV. SALAVERRY", tipo:"PLAZA", visitas:126, img: "/plazas/cdmacape.webp", data:{LUGAR:"CAMPO DE MARTE - ENTRADA AV. SALAVERRY", HORA:"4:30 PM", FECHA:"DOMINGO 13 DE SETIEMBRE", INSCRIPCION:"s/5 - s/7 filtros", HOST:"NATAN - ZK", JURADOS:"LOA - KEDRIC - BEEF", PREMIO:"100 SOLES<br/>CUPO A NACIONAL<br/>S/400 RUMBO A LA INTERNACIONAL"}},
   {id:2, distrito:"MIRAFLORES", tag:"", estado:"VERIFICADO", live:true, nombre:"PARQUE KENNEDY", fecha:"DOM 16 FEB", fechaISO:"2026-02-16", hora:"4PM", host:"@lacalle", lugar:"Miraflores", tipo:"OPEN", visitas:89, img:"https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?w=800", data:{LUGAR:"Parque Kennedy", HORA:"4:00 PM", FECHA:"Domingo 16 Feb", INSCRIPCION:"GRATIS", HOST:"JOTA FLOW", JURADOS:"POR CONFIRMAR", PREMIO:"50 SOLES"}},
   {id:3, distrito:"SMP", tag:"", estado:"VERIFICADO", live:false, nombre:"PLAZA DE ARMAS SMP", fecha:"VIE 14 FEB", fechaISO:"2026-02-14", hora:"5PM", host:"@zcrank", lugar:"SMP", tipo:"UNDER", visitas:56, img:"https://images.unsplash.com/photo-1518831959646-742a3a5b6f6b?w=800", data:{LUGAR:"Plaza de Armas SMP", HORA:"5:00 PM", FECHA:"Viernes 14 Feb", INSCRIPCION:"3 SOLES", HOST:"MC CALLE", JURADOS:"VITTO - KAOS", PREMIO:"70 SOLES"}},
   {id:4, distrito:"CENTRO DE LIMA", tag:"DESTACADA", estado:"VERIFICADO", live:true, nombre:"ALAMEDA CHABUCA", fecha:"SÁB 15 FEB", fechaISO:"2026-02-15", hora:"3PM", host:"@mcperu", lugar:"Centro de Lima", tipo:"SEMI", visitas:102, img:"https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?w=800", data:{LUGAR:"Alameda Chabuca", HORA:"3:00 PM", FECHA:"Sábado 15 Feb", INSCRIPCION:"4 SOLES", HOST:"LUCAS", JURADOS:"LEO - CHINO", PREMIO:"80 SOLES"}},
@@ -74,16 +74,17 @@ export default function Home(){
               </div>
               <div className="text-[11px] opacity-60 mt-1"> • {p.lugar}</div>
 
-              <div className="grid grid-cols-4 gap-2 mt-3 bg-[#F5F5F5] rounded-xl p-2.5 border border-black/5">
-                <div className="col-span-1">
+              {/* CAJONES 25% / 25% / 50% */}
+              <div className="flex gap-2 mt-3 bg-[#F5F5F5] rounded-xl p-2.5 border border-black/5">
+                <div className="w-[25%]">
                   <div className="text-[7px] tracking-widest opacity-40 font-black">🎤 HOST</div>
-                  <div className="text-[10px] font-black leading-tight mt-0.5">{p.data.HOST}</div>
+                  <div className="text-[10px] font-black leading-tight mt-0.5 break-words">{p.data.HOST}</div>
                 </div>
-                <div className="col-span-1">
+                <div className="w-[25%]">
                   <div className="text-[7px] tracking-widest opacity-40 font-black">⚖️ JURADOS</div>
-                  <div className="text-[10px] font-bold leading-tight mt-0.5">{p.data.JURADOS}</div>
+                  <div className="text-[10px] font-bold leading-tight mt-0.5 break-words">{p.data.JURADOS}</div>
                 </div>
-                <div className="col-span-2">
+                <div className="w-[50%]">
                   <div className="text-[7px] tracking-widest opacity-40 font-black">🏆 PREMIO</div>
                   <div className="text-[10px] font-black leading-tight mt-0.5" dangerouslySetInnerHTML={{__html: p.data.PREMIO}} />
                 </div>
