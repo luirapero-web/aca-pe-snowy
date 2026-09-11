@@ -1,1 +1,5 @@
-export default function RootLayout({children}:any){return <html lang="es"><body style={{margin:0,background:"black"}}>{children}</body></html>}
+import "./globals.css"
+export const metadata = { title: "ACA - Hip Hop Underground" }
+export default function RootLayout({children}:{children:any}){
+  return <html lang="es"><body>{children}</body></html>
+}
