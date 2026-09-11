@@ -74,18 +74,17 @@ export default function Home(){
               </div>
               <div className="text-[11px] opacity-60 mt-1"> • {p.lugar}</div>
 
-              <div className="grid grid-cols-3 gap-2 mt-3 bg-[#F5F5F5] rounded-xl p-2.5 border border-black/5">
-                <div>
+              <div className="grid grid-cols-4 gap-2 mt-3 bg-[#F5F5F5] rounded-xl p-2.5 border border-black/5">
+                <div className="col-span-1">
                   <div className="text-[7px] tracking-widest opacity-40 font-black">🎤 HOST</div>
                   <div className="text-[10px] font-black leading-tight mt-0.5">{p.data.HOST}</div>
                 </div>
-                <div>
+                <div className="col-span-1">
                   <div className="text-[7px] tracking-widest opacity-40 font-black">⚖️ JURADOS</div>
                   <div className="text-[10px] font-bold leading-tight mt-0.5">{p.data.JURADOS}</div>
                 </div>
-                <div>
+                <div className="col-span-2">
                   <div className="text-[7px] tracking-widest opacity-40 font-black">🏆 PREMIO</div>
-                  {/* SOLO ESTA PARTE CAMBIADA PARA SALTO DE LINEA */}
                   <div className="text-[10px] font-black leading-tight mt-0.5" dangerouslySetInnerHTML={{__html: p.data.PREMIO}} />
                 </div>
               </div>
@@ -116,7 +115,6 @@ export default function Home(){
               <div>💰 INSCRIPCIÓN: <b>{modal.data.INSCRIPCION}</b></div>
               <div>🎤 HOST: <b>{modal.data.HOST}</b></div>
               <div>⚖️ JURADOS: <b>{modal.data.JURADOS}</b></div>
-              {/* SOLO ESTA PARTE CAMBIADA PARA SALTO DE LINEA */}
               <div>🏆 PREMIO: <b className="text-[#CCFF00] block mt-1 leading-tight" dangerouslySetInnerHTML={{__html: modal.data.PREMIO}} /></div>
             </div>
             <button onClick={()=>setModal(null)} className="w-full bg-[#CCFF00] text-black py-3 rounded-full font-black text-[12px] mt-4">CERRAR</button>
