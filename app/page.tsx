@@ -22,7 +22,7 @@ export default function Home(){
       if(filtro==="HOY") return p.fechaISO === hoyISO
       if(filtro==="NORTE" && ["COMAS","SMP"].includes(p.distrito)) return true
       if(filtro==="SUR" && ["BARRANCO","VES","VILLA EL SALVADOR"].includes(p.distrito)) return true
-      if(filtro==="CENTRO" && ["MIRAFLORES","CENTRO DE LIMA"].includes(p.distrito)) return true
+      if(filtro==="CENTRO" && ["MIRAFLORES","CENTRO DE LIMA", "JESUS MARIA"].includes(p.distrito)) return true
       if(p.distrito.includes(filtro)) return true
       return false
     })
