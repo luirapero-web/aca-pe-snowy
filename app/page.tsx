@@ -26,7 +26,7 @@ export default function Page(){
       <div className="relative z-10 max-w-6xl mx-auto px-4 py-6">
         {/* HEADER */}
         <div className="flex justify-between items-start">
-          <div className="anton text-[36px] leading-none tracking-tighter" style={{textShadow:"3px 3px 0 #CCFF00"}}>ACA.PE<br/><span className="text-[10px] tracking-[0.4em] opacity-60 font-sans">¿DÓNDE EST? ACA PE</span></div>
+          <div className="anton text-[36px] leading-none tracking-tighter" style={{textShadow:"3px 3px 0 #CCFF00"}}>ACA.PE<br/><span className="text-[10px] tracking-[0.4em] opacity-60 font-sans">¿DÓNDE ES? ACA PE</span></div>
           <div className="bg-white text-black px-3 py-1 rounded-full text-[10px] font-black">ADMIN 🔒</div>
         </div>
 
