@@ -1,108 +1,86 @@
 "use client"
 import { useState } from "react"
 
-const eventosInicial = [
-  { id:1, nombre:"CLASIFICATORIA 08", lugar:"Campo de Marte - Jesús María", fecha:"DOM 13 SET", hora:"5PM", inscripcion:"5 SOLES", host:"NATAN - ZK", jurados:"LOA - KEDRIC - BEEF", resultado:"Por jugar", asistentes:23, color:"#CCFF00" },
-  { id:2, nombre:"LIMA NORTE UNDER", lugar:"Parque Sinchi Roca - Comas", fecha:"SAB 12 SET", hora:"4PM", inscripcion:"GRATIS", host:"JOTA", jurados:"SWEET - KIAN - GOAT", resultado:"Clasifica a Norte Final", asistentes:41, color:"#ff2d95" },
-  { id:3, nombre:"SUR RANKS", lugar:"Parque Huayna Cápac - SJM", fecha:"DOM 14 SET", hora:"3:30PM", inscripcion:"3 SOLES", host:"CUBANITO", jurados:"MARICHI - ZERO", resultado:"Fecha 02", asistentes:18, color:"#00e5ff" },
-  { id:4, nombre:"ESTE PUNCH", lugar:"Parque Canto Rey - SJL", fecha:"SAB 13 SET", hora:"5PM", inscripcion:"5 SOLES", host:"TURBO", jurados:"ZEG - SHUFFLE", resultado:"Semifinal", asistentes:56, color:"#CCFF00" },
-  { id:5, nombre:"CALLAO BRAVOS", lugar:"Plaza Grau - Callao", fecha:"DOM 13 SET", hora:"4PM", inscripcion:"GRATIS", host:"GONZA", jurados:"WALY - JACHO", resultado:"Por definir", asistentes:12, color:"#ff2d95" },
-  { id:6, nombre:"CENTRO LEYENDA", lugar:"Parque La Muralla - Centro", fecha:"VIE 12 SET", hora:"6PM", inscripcion:"2 SOLES", host:"KAOS", jurados:"SOYER - VILLESTE", resultado:"Final Centro", asistentes:33, color:"#00e5ff" },
+const plazas = [
+  { id:1, zona:"SUR", distrito:"BARRANCO", nombre:"PLAZA BARRANCO", hora:"Sáb 8PM", host:"@jotaflow", lugar:"Barranco", badge:"PRO", visitas:126, batallas:2, img:"https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?w=600", destacada:true, live:true },
+  { id:2, zona:"CENTRO", distrito:"MIRAFLORES", nombre:"PARQUE KENNEDY", hora:"Dom 4PM", host:"@llacalle", lugar:"Miraflores", badge:"OPEN", visitas:89, batallas:1, img:"https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=600", destacada:false, live:true },
+  { id:3, zona:"NORTE", distrito:"SMP", nombre:"PLAZA DE ARMAS SMP", hora:"Vie 8PM", host:"@zorraok", lugar:"SMP", badge:"UNDER", visitas:56, batallas:1, img:"https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=600", destacada:false, live:false },
+  { id:4, zona:"CENTRO", distrito:"CENTRO DE LIMA", nombre:"ALAMEDA CHABUCA", hora:"Sáb 3PM", host:"@mcperu", lugar:"Centro de Lima", badge:"SEMI", visitas:102, batallas:1, img:"https://images.unsplash.com/photo-1504704911898-68304a7d2807?w=600", destacada:true, live:true },
+  { id:5, zona:"SUR", distrito:"VILLA EL SALVADOR", nombre:"PARQUE VES", hora:"Dom 5PM", host:"@elsalvador", lugar:"Villa El Salvador", badge:"OPEN", visitas:78, batallas:2, img:"https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=600", destacada:false, live:false },
+  { id:6, zona:"NORTE", distrito:"COMAS", nombre:"PARQUE COMAS", hora:"Sáb 4PM", host:"@mcperu", lugar:"Comas", badge:"PRO", visitas:95, batallas:3, img:"https://images.unsplash.com/photo-1429962714451-bb934ecdc4ec?w=600", destacada:true, live:false },
 ]
 
 export default function Page(){
-  const [eventos, setEventos] = useState(eventosInicial)
-  const [expandido, setExpandido] = useState<number|null>(null)
-  const [voy, setVoy] = useState<number[]>([])
-
-  const toggleAsistir = (id:number) => {
-    if(voy.includes(id)){
-      setVoy(voy.filter(v=>v!==id))
-      setEventos(eventos.map(e=> e.id===id? {...e, asistentes:e.asistentes-1} : e))
-    } else {
-      setVoy([...voy, id])
-      setEventos(eventos.map(e=> e.id===id? {...e, asistentes:e.asistentes+1} : e))
-    }
-  }
+  const [filtro, setFiltro] = useState("TODOS")
+  const filtradas = filtro==="TODOS"? plazas : plazas.filter(p=>p.zona===filtro)
 
   return (
-    <>
-      <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Anton&family=Space+Grotesk:wght@500;700;900&display=swap');
-       .anton{font-family:'Anton',sans-serif}
-        @keyframes slide{from{transform:translateY(24px);opacity:0}to{transform:translateY(0);opacity:1}}
-        @keyframes float{0%,100%{transform:translateY(0) rotate(-12deg)}50%{transform:translateY(-10px) rotate(-10deg)}}
-       .slide{animation:slide 0.6s ease both}
-      `}</style>
+    <main className="min-h-screen bg-[#0A0A0A] text-white relative overflow-hidden">
+      {/* FONDO GRAFFITI */}
+      <div className="pointer-events-none fixed inset-0 opacity-[0.06] anton text-[18vw] leading-none">ACA PE</div>
+      <div className="pointer-events-none fixed inset-0">
+        <div className="absolute left-[5%] top-[20%] w-2 h-2 bg-[#CCFF00] rounded-full blur-[1px]"></div>
+        <div className="absolute right-[10%] top-[40%] w-1 h-1 bg-[#ff2d95] rounded-full"></div>
+      </div>
 
-      <main className="min-h-screen bg-[#0A0A0A] text-white relative overflow-hidden">
-        {/* GRAFFITI FONDO ANIMADO */}
-        <div className="pointer-events-none fixed inset-0">
-          <div className="absolute -rotate-12 left-[-10%] top-[5%] text-[26vw] font-black leading-none anton text-white opacity-[0.03]">FREESTYLE</div>
-          <div className="absolute rotate-6 right-[-10%] top-[30%] text-[20vw] font-black leading-none anton text-[#CCFF00] opacity-[0.04]">BARRIO</div>
-          <div className="absolute -rotate-3 left-[10%] bottom-[5%] text-[18vw] font-black leading-none anton text-white opacity-[0.03]">ACÁ.PE</div>
-          <div className="absolute left-[15%] top-[20%] w-3 h-3 rounded-full bg-[#CCFF00] blur-[1px]"></div>
-          <div className="absolute right-[20%] top-[60%] w-2 h-2 rounded-full bg-[#ff2d95]"></div>
+      <div className="relative z-10 max-w-6xl mx-auto px-4 py-6">
+        {/* HEADER */}
+        <div className="flex justify-between items-start">
+          <div className="anton text-[36px] leading-none tracking-tighter" style={{textShadow:"3px 3px 0 #CCFF00"}}>ACA.PE<br/><span className="text-[10px] tracking-[0.4em] opacity-60 font-sans">¿DÓNDE EST? ACA PE</span></div>
+          <div className="bg-white text-black px-3 py-1 rounded-full text-[10px] font-black">ADMIN 🔒</div>
         </div>
 
-        <div className="relative z-10 max-w-6xl mx-auto px-4 py-6">
-          {/* HEADER ACA.PE */}
-          <div className="flex justify-between items-center slide">
-            <h1 className="anton text-[32px] tracking-tighter">ACA.PE</h1>
-            <div className="bg-white text-black px-3 py-1 rounded-full text-[10px] font-black tracking-widest">acá.pe</div>
+        {/* HERO */}
+        <div className="text-center mt-12">
+          <div className="inline-flex items-center gap-2 bg-white/10 rounded-full px-3 py-1 text-[10px] tracking-widest mb-4"><span className="w-2 h-2 bg-red-500 rounded-full animate-pulse"></span> 4 BATALLAS HOY</div>
+          <h1 className="anton text-[52px] leading-[0.85] uppercase">¿DÓNDE ES?<br/><span className="text-[64px] text-[#CCFF00] graffiti-outline">ACA PE</span></h1>
+          <p className="mt-4 text-white/60 text-[12px] max-w-lg mx-auto">El mapa real del freestyle de Lima — sin humo, puro barrio. Plazas verificadas, horarios que si se cumplen, y el host que responde DM.</p>
+          <div className="mt-6 flex justify-center gap-3">
+            <button className="bg-[#CCFF00] text-black px-5 py-2.5 rounded-full text-[11px] font-black">VER PLAZAS HOY →</button>
+            <button className="bg-white/10 backdrop-blur px-5 py-2.5 rounded-full text-[11px] font-bold">AGREGAR MI PLAZA</button>
           </div>
+        </div>
 
-          {/* TITULO DONDE ES HOY */}
-          <div className="mt-8 slide" style={{animationDelay:"0.1s"}}>
-            <p className="text-[12px] tracking-[0.4em] opacity-50">¿DONDE ES HOY?</p>
-            <h2 className="anton text-[52px] md:text-[84px] leading-[0.85] uppercase mt-2">
-              ACA PE<br/><span className="text-[#CCFF00]">EN TU BARRIO</span>
-            </h2>
-            <p className="mt-3 text-white/60 max-w-xl text-[14px]">Eventos de freestyle en cada parque de Lima. Toca un cuadro para ver info completa y dale a ASISTIRÉ.</p>
-          </div>
+        {/* STATS */}
+        <div className="grid grid-cols-4 gap-3 mt-10">
+          <div className="bg-white/5 border border-white/10 rounded-2xl p-4 text-center"><div className="font-black text-[18px]">12</div><div className="text-[8px] opacity-50 tracking-widest mt-1">PLAZAS</div></div>
+          <div className="bg-white/5 border border-white/10 rounded-2xl p-4 text-center"><div className="font-black text-[18px]">340</div><div className="text-[8px] opacity-50 tracking-widest mt-1">FREESTYLERS</div></div>
+          <div className="bg-white/5 border border-white/10 rounded-2xl p-4 text-center"><div className="font-black text-[18px]">S/5 +</div><div className="text-[8px] opacity-50 tracking-widest mt-1">INGRESOS</div></div>
+          <div className="bg-white/5 border border-white/10 rounded-2xl p-4 text-center"><div className="font-black text-[18px]">1047</div><div className="text-[8px] opacity-50 tracking-widest mt-1">VISITAS HOY</div></div>
+        </div>
 
-          {/* GRID 6 EVENTOS INTERACTIVOS */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mt-10">
-            {eventos.map((ev,i)=>(
-              <div key={ev.id}
-                onClick={()=> setExpandido(expandido===ev.id? null : ev.id)}
-                className={`slide group cursor-pointer rounded-[24px] border-2 bg-[#111] p-5 transition-all duration-300 hover:scale-[1.02] hover:-rotate-1 ${expandido===ev.id? 'border-white col-span-1 md:col-span-2 lg:col-span-1 shadow-[0_20px_60px_rgba(0,0,0,0.6)]' : 'border-white/10'}`}
-                style={{animationDelay:`${0.2 + i*0.08}s`, borderColor: expandido===ev.id? ev.color : undefined}}
-              >
-                <div className="flex justify-between">
-                  <span className="text-[10px] font-black px-2.5 py-1 rounded-full" style={{background:ev.color, color:"black"}}>{ev.fecha} - {ev.hora}</span>
-                  <span className="text-[11px] opacity-50">{ev.asistentes} van</span>
+        {/* FILTROS */}
+        <div className="flex justify-center gap-2 mt-8 flex-wrap">
+          {["TODOS","HOY","NORTE","SUR","CENTRO"].map(f=>(
+            <button key={f} onClick={()=>setFiltro(f)} className={`px-4 py-2 rounded-full text-[11px] font-black tracking-wider ${filtro===f? 'bg-[#CCFF00] text-black shadow-[0_0_15px_rgba(204,255,0,0.5)]' : 'bg-white/10 text-white/70'}`}>{f}</button>
+          ))}
+        </div>
+
+        {/* GRID PLAZAS */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mt-8">
+          {filtradas.map(plaza=>(
+            <div key={plaza.id} className="bg-white rounded-[18px] overflow-hidden text-black group hover:scale-[1.01] transition-transform">
+              <div className="relative h-[190px]">
+                <img src={plaza.img} className="w-full h-full object-cover" />
+                <div className="absolute top-3 left-3 flex gap-1">
+                  <span className="bg-black text-white text-[8px] font-black px-2 py-1 rounded-full">{plaza.distrito}</span>
+                  {plaza.destacada && <span className="bg-[#CCFF00] text-black text-[8px] font-black px-2 py-1 rounded-full">DESTACADA</span>}
+                  <span className="bg-[#CCFF00] text-black text-[8px] font-black px-2 py-1 rounded-full">VERIFICADO</span>
                 </div>
-
-                <h3 className="anton text-[28px] leading-[0.9] mt-4 uppercase group-hover:text-[#CCFF00] transition-colors">{ev.nombre}</h3>
-                <p className="text-[12px] mt-2 text-white/60 flex items-center gap-1">📍 {ev.lugar}</p>
-
-                {/* INFO QUE SE EXPANDE */}
-                <div className={`grid transition-all duration-300 ${expandido===ev.id? 'grid-rows-[1fr] mt-4 opacity-100' : 'grid-rows-[0fr] opacity-0'}`}>
-                  <div className="overflow-hidden">
-                    <div className="space-y-2 pt-3 border-t border-white/10 mt-3">
-                      <div className="flex justify-between text-[12px]"><span className="opacity-50">INSCRIPCIÓN</span><b style={{color:ev.color}}>{ev.inscripcion}</b></div>
-                      <div className="flex justify-between text-[12px]"><span className="opacity-50">HOST</span><b>{ev.host}</b></div>
-                      <div className="flex justify-between text-[12px]"><span className="opacity-50">JURADOS</span><b>{ev.jurados}</b></div>
-                      <div className="bg-white/5 rounded-xl p-3 mt-2"><span className="text-[10px] opacity-50">RESULTADO</span><div className="font-bold text-[13px] mt-1">{ev.resultado}</div></div>
-                    </div>
-                  </div>
-                </div>
-
-                {/* BOTON ASISTIRE */}
-                <button
-                  onClick={(e)=>{e.stopPropagation(); toggleAsistir(ev.id)}}
-                  className={`mt-4 w-full py-3 rounded-full font-black text-[13px] tracking-wider transition-all ${voy.includes(ev.id)? 'bg-white text-black' : 'bg-[#CCFF00] text-black hover:bg-white'}`}
-                >
-                  {voy.includes(ev.id)? '✓ VOY A IR' : 'ASISTIRÉ →'}
-                </button>
+                {plaza.live && <span className="absolute top-3 right-3 bg-red-600 text-white text-[8px] font-black px-2 py-1 rounded-full">● LIVE</span>}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
               </div>
-            ))}
-          </div>
-
-          <p className="text-center text-[11px] opacity-30 mt-12 tracking-widest">ACA.PE - CULTURA HIP HOP DESDE EL BARRIO - LIMA PERÚ 2026</p>
+              <div className="p-4 text-center">
+                <h3 className="font-black text-[16px] tracking-tighter">{plaza.nombre}</h3>
+                <div className="flex justify-center gap-2 mt-2 text-[10px] text-black/50"><span>🕒 {plaza.hora}</span><span>{plaza.host}</span><span>📍 {plaza.lugar}</span><span className="bg-black text-white px-2 rounded-full text-[8px]">{plaza.badge}</span></div>
+                <button className="mt-4 w-full bg-black text-white py-2.5 rounded-full text-[11px] font-black">📍 CÓMO LLEGAR — VER EN MAPS</button>
+                <button className="mt-2 w-full bg-white border border-black py-2.5 rounded-full text-[11px] font-black">VER BATALLAS ({plaza.batallas})</button>
+                <div className="mt-3 text-[8px] opacity-40 tracking-widest">{plaza.visitas} VISITAS • ACTIVA</div>
+              </div>
+            </div>
+          ))}
         </div>
-      </main>
-    </>
+      </div>
+    </main>
   )
 }
