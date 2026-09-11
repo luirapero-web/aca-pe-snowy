@@ -76,6 +76,13 @@ export default function Home(){
               <div className="text-[11px] opacity-60 mt-1">Host: {p.host} • {p.lugar}</div>
 
               <div className="grid grid-cols-2 gap-2 mt-3 bg-[#F5F5F5] rounded-xl p-2.5 border border-black/5">
+
+<div>
+                  <div className="text-[7px] tracking-widest opacity-40 font-black">🎤 HOST</div>
+                  <div className="text-[10px] font-black leading-tight mt-0.5">{p.data.HOST}</div>
+                </div>
+              </div>
+
                 <div>
                   <div className="text-[7px] tracking-widest opacity-40 font-black">⚖️ JURADOS</div>
                   <div className="text-[10px] font-bold leading-tight mt-0.5">{p.data.JURADOS}</div>
