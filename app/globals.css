@@ -1,23 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Anton&family=Space+Grotesk:wght@400;700&display=swap');
-body{margin:0;background:#0a0a0a;color:white;font-family:'Space Grotesk',sans-serif}
+@import url('https://fonts.googleapis.com/css2?family=Anton&family=Space+Grotesk:wght@500;700;900&display=swap');
+body{margin:0;background:#0A0A0A;color:white;font-family:'Space Grotesk',sans-serif}
 .anton{font-family:'Anton',sans-serif}
-.graffiti-text{
-  text-transform:uppercase;
-  -webkit-text-stroke:1.5px white;
-  color:transparent;
-  letter-spacing:2px;
-}
-.spray{position:relative}
-.spray::after{
-  content:'';
-  position:absolute;
-  left:-10px; right:-10px; top:45%; height:18px;
-  background:#ccff00; z-index:-1; transform:rotate(-1deg);
-}
-.card{
-  background:#111;
-  border:1.5px solid #222;
-  border-radius:16px;
-  padding:16px;
-}
-.neon{box-shadow:0 0 20px rgba(204,255,0,0.3); border-color:#ccff00}
+.graffiti-outline{color:#CCFF00; -webkit-text-stroke:2px #CCFF00; text-shadow:4px 4px 0px #CCFF00}
