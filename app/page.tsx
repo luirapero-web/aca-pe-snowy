@@ -10,6 +10,16 @@ const PLAZAS = [
   {id:6, distrito:"COMAS", tag:"", estado:"VERIFICADO", live:false, nombre:"PLAZA NORTE COMAS", fecha:"SÁB 15 FEB", fechaISO:"2026-02-15", hora:"5:30PM", host:"@dark", lugar:"Comas", tipo:"PRO", visitas:95, img:"https://images.unsplash.com/photo-1493676304819-0d7a8d026dcf?w=800", data:{LUGAR:"Parque Sinchi Roca", HORA:"5:30 PM", FECHA:"Sábado 15 Feb", INSCRIPCION:"5 SOLES", HOST:"DARK", JURADOS:"RACSO - YAN", PREMIO:"60 SOLES"}},
 ]
 
+function getBadge(fechaISO:string){
+  const hoy = new Date(); hoy.setHours(0,0,0,0)
+  const evento = new Date(fechaISO + "T12:00:00"); evento.setHours(0,0,0,0)
+  const diff = Math.round((evento.getTime() - hoy.getTime()) / (1000*60*60*24))
+  if(diff === 0) return { text:"● ACTIVO", clase:"bg-[#22c55e] text-black" }
+  if(diff === 1) return { text:"● EN 1 DÍA", clase:"bg-white text-black" }
+  if(diff > 1) return { text:`● EN ${diff} DÍAS`, clase:"bg-white text-black" }
+  return { text:"● FINALIZADO", clase:"bg-black/60 text-white/70" }
+}
+
 export default function Home(){
   const [filtro,setFiltro]=useState("TODOS")
   const [modal,setModal]=useState<any>(null)
@@ -54,7 +64,9 @@ export default function Home(){
             <div className="font-black mt-2">NO HAY PLAZAS HOY</div>
             <div className="text-[11px] mt-1">Revisa en TODOS</div>
           </div>
-        ) : filtradas.map(p=>(
+        ) : filtradas.map(p=>{
+          const badge = getBadge(p.fechaISO)
+          return (
           <div key={p.id} className="bg-white text-black rounded-[24px] overflow-hidden">
             <div className="relative cursor-pointer" onClick={()=>setModal(p)}>
               <img src={p.img} className="h-[210px] w-full object-cover"/>
@@ -63,7 +75,7 @@ export default function Home(){
                 {p.tag&&<span className="bg-[#CCFF00] text-black text-[8px] px-2 py-1 rounded-full font-black">{p.tag}</span>}
                 <span className="bg-[#CCFF00] text-black text-[7px] px-2 py-1 rounded-full font-bold">{p.estado}</span>
               </div>
-              {p.live&&<span className="absolute top-3 right-3 bg-[#22c55e] text-black text-[9px] px-2.5 py-1 rounded-full font-black">● ACTIVO</span>}
+              <span className={`absolute top-3 right-3 ${badge.clase} text-[9px] px-2.5 py-1 rounded-full font-black`}>{badge.text}</span>
               <div className="absolute bottom-3 left-3 bg-white/90 backdrop-blur text-black text-[10px] px-2.5 py-1 rounded-full font-black">📅 {p.fecha} • {p.hora}</div>
             </div>
 
@@ -100,7 +112,7 @@ export default function Home(){
               <div className="text-[8px] opacity-30 mt-2 text-center">{p.visitas + (asistire[p.id]?1:0)} VISITAS • ACTIVA</div>
             </div>
           </div>
-        ))}
+        )})}
       </div>
 
       {modal && (
