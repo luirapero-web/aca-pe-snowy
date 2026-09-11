@@ -2,12 +2,12 @@
 import { useState, useMemo } from "react"
 
 const PLAZAS = [
-  {id:1, distrito:"JESUS MARIA", tag:"DESTACADA", estado:"VERIFICADO", live:true, nombre:"CLASIFICATORIA 08", fecha:"DOM 13 SET", fechaISO:"2026-02-15", hora:"4:30PM", lugar:"CAMPO DE MARTE - ENTRADA AV. SALAVERRY", tipo:"PLAZA", visitas:126, img: "/plazas/cdmacape.webp", data:{LUGAR:"CAMPO DE MARTE - ENTRADA AV. SALAVERRY", HORA:"4:30 PM", FECHA:"DOMINGO 13 DE SETIEMBRE", INSCRIPCION:"s/5 - s/7 filtros", HOST:"NATANN - ZK", JURADOS:"LOA - KEDRIC - BEEF", PREMIO:["100 SOLES", "CUPO A NACIONAL", "s/400 rumbo a la internacional"]}},
-  {id:2, distrito:"MIRAFLORES", tag:"", estado:"VERIFICADO", live:true, nombre:"PARQUE KENNEDY", fecha:"DOM 16 FEB", fechaISO:"2026-02-16", hora:"4PM", host:"@lacalle", lugar:"Miraflores", tipo:"OPEN", visitas:89, img:"https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?w=800", data:{LUGAR:"Parque Kennedy", HORA:"4:00 PM", FECHA:"Domingo 16 Feb", INSCRIPCION:"GRATIS", HOST:"JOTA FLOW", JURADOS:"POR CONFIRMAR", PREMIO:"50 SOLES"}},
-  {id:3, distrito:"SMP", tag:"", estado:"VERIFICADO", live:false, nombre:"PLAZA DE ARMAS SMP", fecha:"VIE 14 FEB", fechaISO:"2026-02-14", hora:"5PM", host:"@zcrank", lugar:"SMP", tipo:"UNDER", visitas:56, img:"https://images.unsplash.com/photo-1518831959646-742a3a5b6f6b?w=800", data:{LUGAR:"Plaza de Armas SMP", HORA:"5:00 PM", FECHA:"Viernes 14 Feb", INSCRIPCION:"3 SOLES", HOST:"MC CALLE", JURADOS:"VITTO - KAOS", PREMIO:"70 SOLES"}},
-  {id:4, distrito:"CENTRO DE LIMA", tag:"DESTACADA", estado:"VERIFICADO", live:true, nombre:"ALAMEDA CHABUCA", fecha:"SÁB 15 FEB", fechaISO:"2026-02-15", hora:"3PM", host:"@mcperu", lugar:"Centro de Lima", tipo:"SEMI", visitas:102, img:"https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?w=800", data:{LUGAR:"Alameda Chabuca", HORA:"3:00 PM", FECHA:"Sábado 15 Feb", INSCRIPCION:"4 SOLES", HOST:"LUCAS", JURADOS:"LEO - CHINO", PREMIO:"80 SOLES"}},
-  {id:5, distrito:"VILLA EL SALVADOR", tag:"", estado:"VERIFICADO", live:false, nombre:"PARQUE VES", fecha:"DOM 16 FEB", fechaISO:"2026-02-16", hora:"4PM", host:"@brayan", lugar:"VES", tipo:"HOT", visitas:78, img:"https://images.unsplash.com/photo-1429962714451-bb934ecdc4ec?w=800", data:{LUGAR:"Parque Central VES", HORA:"4:00 PM", FECHA:"Domingo 16 Feb", INSCRIPCION:"GRATIS", HOST:"BRAYAN", JURADOS:"JOTA - STICK", PREMIO:"40 SOLES"}},
-  {id:6, distrito:"COMAS", tag:"", estado:"VERIFICADO", live:false, nombre:"PLAZA NORTE COMAS", fecha:"SÁB 15 FEB", fechaISO:"2026-02-15", hora:"5:30PM", host:"@dark", lugar:"Comas", tipo:"PRO", visitas:95, img:"https://images.unsplash.com/photo-1493676304819-0d7a8d026dcf?w=800", data:{LUGAR:"Parque Sinchi Roca", HORA:"5:30 PM", FECHA:"Sábado 15 Feb", INSCRIPCION:"5 SOLES", HOST:"DARK", JURADOS:"RACSO - YAN", PREMIO:"60 SOLES"}},
+  {id:1, distrito:"JESUS MARIA", tag:"DESTACADA", estado:"VERIFICADO", live:true, nombre:"CLASIFICATORIA 08", fecha:"DOM 13 SET", fechaISO:"2026-02-15", hora:"4:30PM", lugar:"CAMPO DE MARTE - ENTRADA AV. SALAVERRY", tipo:"PLAZA", visitas:126, img: "/plazas/cdmacape.webp", data:{LUGAR:"CAMPO DE MARTE - ENTRADA AV. SALAVERRY", HORA:"4:30 PM", FECHA:"DOMINGO 13 DE SETIEMBRE", INSCRIPCION:"s/5 - s/7 filtros", HOST:"NATAN - ZK", JURADOS:"LOA - KEDRIC - BEEF", PREMIO:["100 SOLES", "CUPO A NACIONAL", "S/400 RUMBO A LA INTERNACIONAL"]}},
+  {id:2, distrito:"MIRAFLORES", tag:"", estado:"VERIFICADO", live:true, nombre:"PARQUE KENNEDY", fecha:"DOM 16 FEB", fechaISO:"2026-02-16", hora:"4PM", host:"@lacalle", lugar:"Miraflores", tipo:"OPEN", visitas:89, img:"https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?w=800", data:{LUGAR:"Parque Kennedy", HORA:"4:00 PM", FECHA:"Domingo 16 Feb", INSCRIPCION:"GRATIS", HOST:"JOTA FLOW", JURADOS:"POR CONFIRMAR", PREMIO:["50 SOLES"]}},
+  {id:3, distrito:"SMP", tag:"", estado:"VERIFICADO", live:false, nombre:"PLAZA DE ARMAS SMP", fecha:"VIE 14 FEB", fechaISO:"2026-02-14", hora:"5PM", host:"@zcrank", lugar:"SMP", tipo:"UNDER", visitas:56, img:"https://images.unsplash.com/photo-1518831959646-742a3a5b6f6b?w=800", data:{LUGAR:"Plaza de Armas SMP", HORA:"5:00 PM", FECHA:"Viernes 14 Feb", INSCRIPCION:"3 SOLES", HOST:"MC CALLE", JURADOS:"VITTO - KAOS", PREMIO:["70 SOLES"]}},
+  {id:4, distrito:"CENTRO DE LIMA", tag:"DESTACADA", estado:"VERIFICADO", live:true, nombre:"ALAMEDA CHABUCA", fecha:"SÁB 15 FEB", fechaISO:"2026-02-15", hora:"3PM", host:"@mcperu", lugar:"Centro de Lima", tipo:"SEMI", visitas:102, img:"https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?w=800", data:{LUGAR:"Alameda Chabuca", HORA:"3:00 PM", FECHA:"Sábado 15 Feb", INSCRIPCION:"4 SOLES", HOST:"LUCAS", JURADOS:"LEO - CHINO", PREMIO:["80 SOLES"]}},
+  {id:5, distrito:"VILLA EL SALVADOR", tag:"", estado:"VERIFICADO", live:false, nombre:"PARQUE VES", fecha:"DOM 16 FEB", fechaISO:"2026-02-16", hora:"4PM", host:"@brayan", lugar:"VES", tipo:"HOT", visitas:78, img:"https://images.unsplash.com/photo-1429962714451-bb934ecdc4ec?w=800", data:{LUGAR:"Parque Central VES", HORA:"4:00 PM", FECHA:"Domingo 16 Feb", INSCRIPCION:"GRATIS", HOST:"BRAYAN", JURADOS:"JOTA - STICK", PREMIO:["40 SOLES"]}},
+  {id:6, distrito:"COMAS", tag:"", estado:"VERIFICADO", live:false, nombre:"PLAZA NORTE COMAS", fecha:"SÁB 15 FEB", fechaISO:"2026-02-15", hora:"5:30PM", host:"@dark", lugar:"Comas", tipo:"PRO", visitas:95, img:"https://images.unsplash.com/photo-1493676304819-0d7a8d026dcf?w=800", data:{LUGAR:"Parque Sinchi Roca", HORA:"5:30 PM", FECHA:"Sábado 15 Feb", INSCRIPCION:"5 SOLES", HOST:"DARK", JURADOS:"RACSO - YAN", PREMIO:["60 SOLES"]}},
 ]
 
 export default function Home(){
@@ -28,6 +28,16 @@ export default function Home(){
     })
     return list.sort((a,b)=> new Date(a.fechaISO).getTime() - new Date(b.fechaISO).getTime())
   },[filtro])
+
+  // ESTA FUNCION HACE EL SALTO DE LINEA
+  const renderPremio = (premio:any) => {
+    const lista = Array.isArray(premio)? premio : [premio]
+    return (
+      <div className="flex flex-col leading-tight">
+        {lista.map((t:string,i:number)=><span key={i}>{t}</span>)}
+      </div>
+    )
+  }
 
   return (
     <main className="min-h-screen bg-[#0A0A0A] text-white">
@@ -74,7 +84,6 @@ export default function Home(){
               </div>
               <div className="text-[11px] opacity-60 mt-1"> • {p.lugar}</div>
 
-              {/* AQUÍ ESTABA EL ERROR - AHORA ESTÁ TODO DENTRO DEL MISMO GRID */}
               <div className="grid grid-cols-3 gap-2 mt-3 bg-[#F5F5F5] rounded-xl p-2.5 border border-black/5">
                 <div>
                   <div className="text-[7px] tracking-widest opacity-40 font-black">🎤 HOST</div>
@@ -86,7 +95,7 @@ export default function Home(){
                 </div>
                 <div>
                   <div className="text-[7px] tracking-widest opacity-40 font-black">🏆 PREMIO</div>
-                  <div className="text-[10px] font-black leading-tight mt-0.5">{p.data.PREMIO}</div>
+                  <div className="text-[10px] font-black leading-tight mt-0.5">{renderPremio(p.data.PREMIO)}</div>
                 </div>
               </div>
 
@@ -116,7 +125,7 @@ export default function Home(){
               <div>💰 INSCRIPCIÓN: <b>{modal.data.INSCRIPCION}</b></div>
               <div>🎤 HOST: <b>{modal.data.HOST}</b></div>
               <div>⚖️ JURADOS: <b>{modal.data.JURADOS}</b></div>
-              <div>🏆 PREMIO: <b className="text-[#CCFF00]">{modal.data.PREMIO}</b></div>
+              <div>🏆 PREMIO: <b className="text-[#CCFF00]">{renderPremio(modal.data.PREMIO)}</b></div>
             </div>
             <button onClick={()=>setModal(null)} className="w-full bg-[#CCFF00] text-black py-3 rounded-full font-black text-[12px] mt-4">CERRAR</button>
           </div>
