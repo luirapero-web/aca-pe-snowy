@@ -72,7 +72,7 @@ export default function Home(){
                 <h3 className="font-black text-[17px] leading-none cursor-pointer" onClick={()=>setModal(p)}>{p.nombre}</h3>
                 <span className="bg-black text-white px-2 py-0.5 rounded-full text-[8px] font-black">{p.tipo}</span>
               </div>
-              <div className="text-[11px] opacity-60 mt-1">Host: {p.host} • {p.lugar}</div>
+              <div className="text-[11px] opacity-60 mt-1"> • {p.lugar}</div>
 
               {/* AQUÍ ESTABA EL ERROR - AHORA ESTÁ TODO DENTRO DEL MISMO GRID */}
               <div className="grid grid-cols-3 gap-2 mt-3 bg-[#F5F5F5] rounded-xl p-2.5 border border-black/5">
