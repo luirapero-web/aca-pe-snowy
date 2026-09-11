@@ -13,7 +13,13 @@ const PLAZAS = [
 export default function Home(){
   const [filtro,setFiltro]=useState("TODOS")
   const [modal,setModal]=useState<any>(null)
+  const [asistire, setAsistire] = useState<Record<number, boolean>>({})
+
   const filtradas = PLAZAS.filter(p=> filtro==="TODOS" || p.distrito.includes(filtro) || (filtro==="NORTE" && ["COMAS","SMP"].includes(p.distrito)) || (filtro==="SUR" && ["BARRANCO","VES","VILLA EL SALVADOR"].includes(p.distrito)) || (filtro==="CENTRO" && ["MIRAFLORES","CENTRO DE LIMA"].includes(p.distrito)))
+
+  const toggleAsistir = (id: number) => {
+    setAsistire(prev => ({...prev, [id]:!prev[id] }))
+  }
 
   return (
     <main className="min-h-screen bg-[#0A0A0A] text-white">
@@ -47,13 +53,50 @@ export default function Home(){
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 p-4 max-w-5xl mx-auto mt-6">
         {filtradas.map(p=>(
           <div key={p.id} className="bg-white text-black rounded-[20px] overflow-hidden border border-white/10">
-            <div className="relative"><img src={p.img} className="h-[200px] w-full object-cover"/><div className="absolute top-2 left-2 flex gap-1"><span className="bg-black text-white text-[8px] px-2 py-1 rounded-full font-black">{p.distrito}</span>{p.tag&&<span className="bg-[#CCFF00] text-black text-[8px] px-2 py-1 rounded-full font-black">{p.tag}</span>}<span className="bg-[#CCFF00] text-black text-[7px] px-2 py-1 rounded-full font-bold">{p.estado}</span></div>{p.live&&<span className="absolute top-2 right-2 bg-red-600 text-white text-[8px] px-2 py-1 rounded-full font-black">● LIVE</span>}</div>
+            {/* 1. AHORA LA IMAGEN ES LA QUE ABRE LA INFO */}
+            <div className="relative cursor-pointer" onClick={()=>setModal(p)}>
+              <img src={p.img} className="h-[200px] w-full object-cover"/>
+              <div className="absolute top-2 left-2 flex gap-1">
+                <span className="bg-black text-white text-[8px] px-2 py-1 rounded-full font-black">{p.distrito}</span>
+                {p.tag&&<span className="bg-[#CCFF00] text-black text-[8px] px-2 py-1 rounded-full font-black">{p.tag}</span>}
+                <span className="bg-[#CCFF00] text-black text-[7px] px-2 py-1 rounded-full font-bold">{p.estado}</span>
+              </div>
+              {p.live&&<span className="absolute top-2 right-2 bg-red-600 text-white text-[8px] px-2 py-1 rounded-full font-black">● LIVE</span>}
+              <div className="absolute inset-0 bg-black/0 hover:bg-black/10 transition-colors" />
+            </div>
+
             <div className="p-4 text-center">
-              <h3 className="font-black text-[16px]">{p.nombre}</h3>
+              <h3 className="font-black text-[16px] cursor-pointer" onClick={()=>setModal(p)}>{p.nombre}</h3>
               <div className="text-[10px] opacity-60 flex justify-center gap-2 mt-1"><span>🕐 {p.hora}</span><span>{p.host}</span><span>{p.lugar}</span><span className="bg-black text-white px-1.5 rounded-full text-[7px]">{p.tipo}</span></div>
-              <button className="w-full bg-black text-white py-2.5 rounded-full text-[10px] font-black mt-3">📍 CÓMO LLEGAR — VER EN MAPS</button>
-              <button onClick={()=>setModal(p)} className="w-full border border-black py-2.5 rounded-full text-[10px] font-black mt-2">VER BATALLAS ({Math.floor(Math.random()*2)+1})</button>
-              <div className="text-[8px] opacity-30 mt-2">{p.visitas} VISITAS • ACTIVA</div>
+
+              <button
+                className="w-full bg-black text-white py-2.5 rounded-full text-[10px] font-black mt-3"
+                onClick={(e)=>{
+                  e.stopPropagation()
+                  window.open(`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(p.data.LUGAR)}`, '_blank')
+                }}
+              >
+                📍 CÓMO LLEGAR — VER EN MAPS
+              </button>
+
+              {/* 2. AHORA ESTE BOTÓN ES SOLO ASISTIRÉ */}
+              <button
+                onClick={(e)=>{
+                  e.stopPropagation()
+                  toggleAsistir(p.id)
+                }}
+                className={`w-full py-2.5 rounded-full text-[10px] font-black mt-2 border transition-all ${
+                  asistire[p.id]
+                   ? "bg-[#CCFF00] border-[#CCFF00] text-black"
+                    : "bg-white border-black text-black hover:bg-black hover:text-white"
+                }`}
+              >
+                {asistire[p.id]? "✓ ASISTIRÉ" : "ASISTIRÉ"}
+              </button>
+
+              <div className="text-[8px] opacity-30 mt-2">
+                {p.visitas + (asistire[p.id]? 1 : 0)} VISITAS • {asistire[p.id]? "ASISTIRÁS" : "ACTIVA"}
+              </div>
             </div>
           </div>
         ))}
