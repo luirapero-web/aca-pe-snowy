@@ -63,7 +63,7 @@ export default function Home(){
                 {p.tag&&<span className="bg-[#CCFF00] text-black text-[8px] px-2 py-1 rounded-full font-black">{p.tag}</span>}
                 <span className="bg-[#CCFF00] text-black text-[7px] px-2 py-1 rounded-full font-bold">{p.estado}</span>
               </div>
-              {p.live&&<span className="absolute top-3 right-3 bg-red-600 text-white text-[9px] px-2.5 py-1 rounded-full font-black">● LIVE</span>}
+              {p.live&&<span className="absolute top-3 right-3 bg-[#22c55e] text-black text-[9px] px-2.5 py-1 rounded-full font-black">● ACTIVO</span>}
               <div className="absolute bottom-3 left-3 bg-white/90 backdrop-blur text-black text-[10px] px-2.5 py-1 rounded-full font-black">📅 {p.fecha} • {p.hora}</div>
             </div>
 
@@ -74,17 +74,16 @@ export default function Home(){
               </div>
               <div className="text-[11px] opacity-60 mt-1"> • {p.lugar}</div>
 
-              {/* CAJONES 25% / 25% / 50% */}
-              <div className="flex gap-2 mt-3 bg-[#F5F5F5] rounded-xl p-2.5 border border-black/5">
-                <div className="w-[25%]">
+              <div className="flex gap-3 mt-3 bg-[#F5F5F5] rounded-xl p-2.5 border border-black/5">
+                <div style={{width:"25%"}}>
                   <div className="text-[7px] tracking-widest opacity-40 font-black">🎤 HOST</div>
                   <div className="text-[10px] font-black leading-tight mt-0.5 break-words">{p.data.HOST}</div>
                 </div>
-                <div className="w-[25%]">
+                <div style={{width:"25%"}}>
                   <div className="text-[7px] tracking-widest opacity-40 font-black">⚖️ JURADOS</div>
                   <div className="text-[10px] font-bold leading-tight mt-0.5 break-words">{p.data.JURADOS}</div>
                 </div>
-                <div className="w-[50%]">
+                <div style={{width:"50%"}}>
                   <div className="text-[7px] tracking-widest opacity-40 font-black">🏆 PREMIO</div>
                   <div className="text-[10px] font-black leading-tight mt-0.5" dangerouslySetInnerHTML={{__html: p.data.PREMIO}} />
                 </div>
