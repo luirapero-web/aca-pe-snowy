@@ -71,10 +71,16 @@ export default function Home(){
           return (
           <div
             key={p.id}
-            onClick={()=> setSeleccion(prev => prev === p.id? null : p.id)}
+            onClick={()=> {
+              if(seleccion === p.id){
+                setModal(p)
+              } else {
+                setSeleccion(p.id)
+              }
+            }}
             className={`group bg-white text-black rounded-[24px] overflow-hidden border-[2.5px] cursor-pointer ${activo? 'border-[#CCFF00] shadow-[0_0_0_4px_rgba(204,255,0,0.35),0_8px_30px_rgba(0,0,0,0.5)]' : 'border-white shadow-[0_8px_30px_rgba(0,0,0,0.5)]'} ${i % 2 === 0? 'rotate-[-1.5deg]' : 'rotate-[1.5deg]'} hover:rotate-0 active:rotate-0 hover:scale-[1.02] active:scale-[1.02] transition-all duration-300 ease-out will-change-transform`}>
 
-            <div className="relative overflow-hidden" onClick={(e)=>{e.stopPropagation(); setModal(p)}}>
+            <div className="relative overflow-hidden">
               <img src={p.img} className={`h-[210px] w-full object-cover transition-transform duration-500 ease-out ${activo? 'scale-110' : 'scale-100 group-hover:scale-110'}`}/>
               <div className="absolute top-3 left-3 flex gap-1">
                 <span className="bg-black text-white text-[9px] px-2.5 py-1 rounded-full font-black">{p.distrito}</span>
