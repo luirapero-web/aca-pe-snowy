@@ -2,15 +2,15 @@
 import { useState, useMemo } from "react"
 
 const PLAZAS = [
-  {id:1, distrito:"JESUS MARIA", tag:"DESTACADA", estado:"VERIFICADO", live:true, nombre:"CLASIFICATORIA 08", fecha:"DOM 13 SET", fechaISO:"2026-09-13", hora:"4:30PM", lugar:"CAMPO DE MARTE - ENTRADA AV. SALAVERRY", tipo:"PLAZA", visitas:126, img: "/plazas/cdmacape.webp", data:{LUGAR:"CAMPO DE MARTE - ENTRADA AV. SALAVERRY", HORA:"4:30 PM", FECHA:"DOMINGO 13 DE SETIEMBRE", INSCRIPCION:"s/5 - s/7 filtros", HOST:"NATAN", BEATS:"ZK", JURADOS:"LOA<br/>KEDRIC<br/>BEEF", PREMIO:"100 SOLES<br/>CUPO A NACIONAL<br/>S/400 RUMBO A LA INTER"}},
-  {id:2, distrito:"CERCADO DE LIMA", tag:"", estado:"VERIFICADO", live:true, nombre:"RAPBUCA", fecha:"LUN 14 SET", fechaISO:"2026-09-14", hora:"4PM", lugar:"PARQUE JUANA ALARCO DE DAMMERT", tipo:"OPEN", visitas:89, img:"/plazas/rapbuca.webp", data:{LUGAR:"Parque Juana Alarco de Dammert", HORA:"6:00 PM", FECHA:"Lunes 14 Setiembre", INSCRIPCION:"GRATIS", HOST:"Zismo", BEATS:"DJ ZK", JURADOS:"Sitho<br/>Sharp<br/>You", PREMIO:"s/80<br/>1 corte x Yisus<br/>1 prod x Flow<br/>1 pack x Wayquis"}},
+  {id:1, distrito:"JESUS MARIA", tag:"DESTACADA", estado:"VERIFICADO", live:true, nombre:"CLASIFICATORIA 08", fecha:"DOM 13 SET", fechaISO:"2026-09-13", hora:"4:30PM", lugar:"CAMPO DE MARTE - ENTRADA AV. SALAVERRY", tipo:"PLAZA", visitas:126, img: "/plazas/cdmacape.webp", data:{LUGAR:"CAMPO DE MARTE - ENTRADA AV. SALAVERRY", HORA:"4:30 PM", FECHA:"DOMINGO 13 DE SETIEMBRE", INSCRIPCION:"s/5 - s/7 filtros", HOST:"NATAN - ZK", BEATS:"RASH", JURADOS:"LOA<br/>KEDRIC<br/>BEEF", PREMIO:"100 SOLES<br/>CUPO A NACIONAL<br/>S/400 RUMBO A LA INTER"}},
+  {id:2, distrito:"CERCADO DE LIMA", tag:"", estado:"VERIFICADO", live:true, nombre:"RAPBUCA", fecha:"LUN 14 SET", fechaISO:"2026-09-14", hora:"4PM", lugar:"PARQUE JUANA ALARCO DE DAMMERT", tipo:"OPEN", visitas:89, img:"/plazas/rapbuca.webp", data:{LUGAR:"Parque Juana Alarco de Dammert", HORA:"6:00 PM", FECHA:"Lunes 14 Setiembre", INSCRIPCION:"GRATIS", HOST:"Zismo", BEATS:"DJ Ponce", JURADOS:"Sitho<br/>Sharp<br/>You", PREMIO:"s/80<br/>1 corte x Yisus<br/>1 prod x Flow<br/>1 pack x Wayquis"}},
 ]
 
 function getBadge(fechaISO:string){
   const hoy = new Date(); hoy.setHours(0,0,0,0)
   const evento = new Date(fechaISO + "T12:00:00"); evento.setHours(0,0,0,0)
   const diff = Math.round((evento.getTime() - hoy.getTime()) / (1000*60*60*24))
-  if(diff === 0) return { text:"● ACTIVO", clase:"bg-[#22c55e] text-black" }
+  if(diff === 0) return { text:"● HOY", clase:"bg-[#CCFF00] text-black" }
   if(diff === 1) return { text:"● EN 1 DÍA", clase:"bg-white text-black" }
   if(diff > 1) return { text:`● EN ${diff} DÍAS`, clase:"bg-white text-black" }
   return { text:"● FINALIZADO", clase:"bg-black/60 text-white/70" }
@@ -35,6 +35,16 @@ export default function Home(){
     })
     return list.sort((a,b)=> new Date(a.fechaISO).getTime() - new Date(b.fechaISO).getTime())
   },[filtro])
+
+  const compartir = async (p:any) => {
+    const texto = `${p.nombre} - ${p.data.LUGAR} - ${p.data.FECHA} ${p.data.HORA} - ACA.PE`
+    if (navigator.share) {
+      try { await navigator.share({ title: p.nombre, text: texto, url: window.location.href }) } catch {}
+    } else {
+      await navigator.clipboard.writeText(texto + " " + window.location.href)
+      alert("Link copiado!")
+    }
+  }
 
   return (
     <main className="min-h-screen bg-[#0A0A0A] text-white">
@@ -64,6 +74,7 @@ export default function Home(){
         ) : filtradas.map((p, i)=>{
           const badge = getBadge(p.fechaISO)
           const activo = seleccion === p.id || asistire[p.id]
+          const asistiran = p.id === 1? 12 + (asistire[p.id]?1:0) : (asistire[p.id]?1:0)
           return (
           <div
             key={p.id}
@@ -111,19 +122,30 @@ export default function Home(){
                 </div>
               </div>
 
-              <button
-                onClick={(e)=>{
-                  e.stopPropagation();
-                  setAsistire(prev => ({...prev, [p.id]:!prev[p.id] }));
-                  setSeleccion(p.id);
-                }}
-                className={`w-full py-3.5 rounded-full text-[12px] font-black mt-3 border-2 transition-all ${
-                  asistire[p.id]? "bg-[#CCFF00] border-[#CCFF00] text-black" : "bg-black border-black text-white"
-                }`}
-              >
-                {asistire[p.id]? "✓ ASISTIRÉ" : "ASISTIRÉ"}
-              </button>
-              <div className="text-[8px] opacity-30 mt-2 text-center">{p.visitas + (asistire[p.id]?1:0)} VISITAS • ACTIVA</div>
+              <div className="flex gap-2 mt-3">
+                <button
+                  onClick={(e)=>{
+                    e.stopPropagation();
+                    setAsistire(prev => ({...prev, [p.id]:!prev[p.id] }));
+                    setSeleccion(p.id);
+                  }}
+                  className={`flex-1 py-3.5 rounded-full text-[12px] font-black border-2 transition-all ${
+                    asistire[p.id]? "bg-[#CCFF00] border-[#CCFF00] text-black" : "bg-black border-black text-white"
+                  }`}
+                >
+                  {asistire[p.id]? "✓ ASISTIRÉ" : "ASISTIRÉ"}
+                </button>
+                <button
+                  onClick={(e)=>{ e.stopPropagation(); compartir(p) }}
+                  className={`w-[54px] h-[50px] rounded-[14px] flex items-center justify-center border-2 transition-all ${
+                    asistire[p.id]? "bg-[#CCFF00] border-[#CCFF00] text-black" : "bg-black border-black text-white"
+                  }`}
+                >
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+                </button>
+              </div>
+
+              <div className="text-[8px] opacity-30 mt-2 text-center">{p.visitas} VISITAS - {asistiran} ASISTIRÁN • ACTIVA</div>
             </div>
           </div>
         )})}
