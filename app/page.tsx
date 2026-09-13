@@ -2,8 +2,8 @@
 import { useState, useMemo } from "react"
 
 const PLAZAS = [
-  {id:1, distrito:"JESUS MARIA", tag:"DESTACADA", estado:"VERIFICADO", live:true, nombre:"CLASIFICATORIA 08", fecha:"DOM 13 SET", fechaISO:"2026-09-13", hora:"4:30PM", lugar:"CAMPO DE MARTE - ENTRADA AV. SALAVERRY", tipo:"PLAZA", visitas:126, img: "/plazas/cdmacape.webp", data:{LUGAR:"CAMPO DE MARTE - ENTRADA AV. SALAVERRY", HORA:"4:30 PM", FECHA:"DOMINGO 13 DE SETIEMBRE", INSCRIPCION:"s/5 - s/7 filtros", HOST:"NATAN - ZK", JURADOS:"LOA<br/>KEDRIC<br/> BEEF", PREMIO:"100 SOLES<br/>CUPO A NACIONAL<br/>S/400 RUMBO A LA INTER"}},
-  {id:2, distrito:"CERCADO DE LIMA", tag:"", estado:"VERIFICADO", live:true, nombre:"RAPBUCA", fecha:"LUN 14 SET", fechaISO:"2026-09-14", hora:"4PM", lugar:"PARQUE JUANA ALARCO DE DAMMERT", tipo:"OPEN", visitas:89, img:"/plazas/rapbuca.webp", data:{LUGAR:"Parque Juana Alarco de Dammert", HORA:"6:00 PM", FECHA:"Lunes 14 Setiembre", INSCRIPCION:"GRATIS", HOST:"Zismo", JURADOS:"Sitho <br/> Sharp <br/>You", PREMIO:"s/80<br/> 1 corte cabello x Yisus Lion <br/>1 producción musical x Flow La Mata<br/>1 pack de snack x Wayquis"}},
+  {id:1, distrito:"JESUS MARIA", tag:"DESTACADA", estado:"VERIFICADO", live:true, nombre:"CLASIFICATORIA 08", fecha:"DOM 13 SET", fechaISO:"2026-09-13", hora:"4:30PM", lugar:"CAMPO DE MARTE - ENTRADA AV. SALAVERRY", tipo:"PLAZA", visitas:126, img: "/plazas/cdmacape.webp", data:{LUGAR:"CAMPO DE MARTE - ENTRADA AV. SALAVERRY", HORA:"4:30 PM", FECHA:"DOMINGO 13 DE SETIEMBRE", INSCRIPCION:"s/5 - s/7 filtros", HOST:"NATAN", BEATS:"ZK", JURADOS:"LOA<br/>KEDRIC<br/>BEEF", PREMIO:"100 SOLES<br/>CUPO A NACIONAL<br/>S/400 RUMBO A LA INTER"}},
+  {id:2, distrito:"CERCADO DE LIMA", tag:"", estado:"VERIFICADO", live:true, nombre:"RAPBUCA", fecha:"LUN 14 SET", fechaISO:"2026-09-14", hora:"4PM", lugar:"PARQUE JUANA ALARCO DE DAMMERT", tipo:"OPEN", visitas:89, img:"/plazas/rapbuca.webp", data:{LUGAR:"Parque Juana Alarco de Dammert", HORA:"6:00 PM", FECHA:"Lunes 14 Setiembre", INSCRIPCION:"GRATIS", HOST:"Zismo", BEATS:"DJ ZK", JURADOS:"Sitho<br/>Sharp<br/>You", PREMIO:"s/80<br/>1 corte x Yisus<br/>1 prod x Flow<br/>1 pack x Wayquis"}},
 ]
 
 function getBadge(fechaISO:string){
@@ -97,11 +97,13 @@ export default function Home(){
               <div className="flex gap-3 mt-3 bg-[#F5F5F5] rounded-xl p-2.5 border border-black/5">
                 <div style={{width:"25%"}}>
                   <div className="text-[7px] tracking-widest opacity-40 font-black">🎤 HOST</div>
-                  <div className="text-[10px] font-black leading-tight mt-0.5 break-words">{p.data.HOST}</div>
+                  <div className="text-[10px] font-black leading-tight mt-0.5 break-words" dangerouslySetInnerHTML={{__html: p.data.HOST}} />
+                  <div className="text-[7px] tracking-widest opacity-40 font-black mt-2">🎧 BEATS</div>
+                  <div className="text-[10px] font-black leading-tight mt-0.5 break-words" dangerouslySetInnerHTML={{__html: p.data.BEATS || ""}} />
                 </div>
                 <div style={{width:"25%"}}>
                   <div className="text-[7px] tracking-widest opacity-40 font-black">⚖️ JURADOS</div>
-                  <div className="text-[10px] font-bold leading-tight mt-0.5 break-words">{p.data.JURADOS}</div>
+                  <div className="text-[10px] font-bold leading-tight mt-0.5 break-words" dangerouslySetInnerHTML={{__html: p.data.JURADOS}} />
                 </div>
                 <div style={{width:"50%"}}>
                   <div className="text-[7px] tracking-widest opacity-40 font-black">🏆 PREMIO</div>
@@ -137,8 +139,9 @@ export default function Home(){
               <div>📅 FECHA: <b>{modal.data.FECHA}</b></div>
               <div>🕐 HORA: <b>{modal.data.HORA}</b></div>
               <div>💰 INSCRIPCIÓN: <b>{modal.data.INSCRIPCION}</b></div>
-              <div>🎤 HOST: <b>{modal.data.HOST}</b></div>
-              <div>⚖️ JURADOS: <b>{modal.data.JURADOS}</b></div>
+              <div>🎤 HOST: <b dangerouslySetInnerHTML={{__html: modal.data.HOST}} /></div>
+              <div>🎧 BEATS: <b dangerouslySetInnerHTML={{__html: modal.data.BEATS || "-"}} /></div>
+              <div>⚖️ JURADOS: <b className="block mt-1" dangerouslySetInnerHTML={{__html: modal.data.JURADOS}} /></div>
               <div>🏆 PREMIO: <b className="text-[#CCFF00] block mt-1 leading-tight" dangerouslySetInnerHTML={{__html: modal.data.PREMIO}} /></div>
             </div>
             <button onClick={()=>setModal(null)} className="w-full bg-[#CCFF00] text-black py-3 rounded-full font-black text-[12px] mt-4">CERRAR</button>
