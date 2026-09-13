@@ -57,17 +57,17 @@ export default function Home(){
         ))}
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 p-4 max-w-5xl mx-auto mt-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 p-4 max-w-5xl mx-auto mt-6">
         {filtradas.length===0? (
           <div className="col-span-full text-center py-16 opacity-40">
             <div className="text-[40px]">😴</div>
             <div className="font-black mt-2">NO HAY PLAZAS HOY</div>
             <div className="text-[11px] mt-1">Revisa en TODOS</div>
           </div>
-        ) : filtradas.map(p=>{
+        ) : filtradas.map((p, i)=>{
           const badge = getBadge(p.fechaISO)
           return (
-          <div key={p.id} className="bg-white text-black rounded-[24px] overflow-hidden">
+          <div key={p.id} className={`bg-white text-black rounded-[24px] overflow-hidden border border-white/10 shadow-[0_8px_30px_rgba(0,0,0,0.5)] ${i % 2 === 0? 'rotate-[-1.5deg]' : 'rotate-[1.5deg]'} hover:rotate-0 active:rotate-0 hover:scale-[1.02] active:scale-[1.02] transition-all duration-300 ease-out will-change-transform`}>
             <div className="relative cursor-pointer" onClick={()=>setModal(p)}>
               <img src={p.img} className="h-[210px] w-full object-cover"/>
               <div className="absolute top-3 left-3 flex gap-1">
