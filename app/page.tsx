@@ -24,7 +24,7 @@ export default function Home(){
   const [filtro,setFiltro]=useState("TODOS")
   const [modal,setModal]=useState<any>(null)
   const [asistire, setAsistire] = useState<Record<number, boolean>>({})
-  const [seleccion, setSeleccion] = useState<Record<number, boolean>>({})
+  const [seleccion, setSeleccion] = useState<number | null>(null)
 
   const filtradas = useMemo(()=>{
     const hoyISO = new Date().toISOString().slice(0,10)
@@ -67,11 +67,11 @@ export default function Home(){
           </div>
         ) : filtradas.map((p, i)=>{
           const badge = getBadge(p.fechaISO)
-          const activo = seleccion[p.id] || asistire[p.id]
+          const activo = seleccion === p.id || asistire[p.id]
           return (
           <div
             key={p.id}
-            onClick={()=> setSeleccion(prev => ({...prev, [p.id]:!prev[p.id]}))}
+            onClick={()=> setSeleccion(prev => prev === p.id? null : p.id)}
             className={`group bg-white text-black rounded-[24px] overflow-hidden border-[2.5px] cursor-pointer ${activo? 'border-[#CCFF00] shadow-[0_0_0_4px_rgba(204,255,0,0.35),0_8px_30px_rgba(0,0,0,0.5)]' : 'border-white shadow-[0_8px_30px_rgba(0,0,0,0.5)]'} ${i % 2 === 0? 'rotate-[-1.5deg]' : 'rotate-[1.5deg]'} hover:rotate-0 active:rotate-0 hover:scale-[1.02] active:scale-[1.02] transition-all duration-300 ease-out will-change-transform`}>
 
             <div className="relative overflow-hidden" onClick={(e)=>{e.stopPropagation(); setModal(p)}}>
@@ -111,7 +111,7 @@ export default function Home(){
                 onClick={(e)=>{
                   e.stopPropagation();
                   setAsistire(prev => ({...prev, [p.id]:!prev[p.id] }));
-                  setSeleccion(prev => ({...prev, [p.id]: true}));
+                  setSeleccion(p.id);
                 }}
                 className={`w-full py-3.5 rounded-full text-[12px] font-black mt-3 border-2 transition-all ${
                   asistire[p.id]? "bg-[#CCFF00] border-[#CCFF00] text-black" : "bg-black border-black text-white"
