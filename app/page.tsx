@@ -66,8 +66,9 @@ export default function Home(){
           </div>
         ) : filtradas.map((p, i)=>{
           const badge = getBadge(p.fechaISO)
+          const seleccionado = asistire[p.id]
           return (
-          <div key={p.id} className={`bg-white text-black rounded-[24px] overflow-hidden border border-white/10 shadow-[0_8px_30px_rgba(0,0,0,0.5)] ${i % 2 === 0? 'rotate-[-1.5deg]' : 'rotate-[1.5deg]'} hover:rotate-0 active:rotate-0 hover:scale-[1.02] active:scale-[1.02] transition-all duration-300 ease-out will-change-transform`}>
+          <div key={p.id} className={`bg-white text-black rounded-[24px] overflow-hidden border-[2.5px] ${seleccionado? 'border-[#CCFF00] shadow-[0_0_0_4px_rgba(204,255,0,0.35),0_8px_30px_rgba(0,0,0,0.5)]' : 'border-black shadow-[0_8px_30px_rgba(0,0,0,0.5)]'} ${i % 2 === 0? 'rotate-[-1.5deg]' : 'rotate-[1.5deg]'} hover:rotate-0 active:rotate-0 hover:scale-[1.02] active:scale-[1.02] transition-all duration-300 ease-out will-change-transform`}>
             <div className="relative cursor-pointer" onClick={()=>setModal(p)}>
               <img src={p.img} className="h-[210px] w-full object-cover"/>
               <div className="absolute top-3 left-3 flex gap-1">
@@ -75,7 +76,7 @@ export default function Home(){
                 {p.tag&&<span className="bg-[#CCFF00] text-black text-[8px] px-2 py-1 rounded-full font-black">{p.tag}</span>}
                 <span className="bg-[#CCFF00] text-black text-[7px] px-2 py-1 rounded-full font-bold">{p.estado}</span>
               </div>
-              <span className={`absolute top-3 right-3 ${badge.clase} text-[9px] px-2.5 py-1 rounded-full font-black`}>{badge.text}</span>
+              <span className={`absolute top-3 right-3 ${badge.clase} text-[9px] px-2.5 py-1 rounded-full font-black border border-black/10`}>{badge.text}</span>
               <div className="absolute bottom-3 left-3 bg-white/90 backdrop-blur text-black text-[10px] px-2.5 py-1 rounded-full font-black">📅 {p.fecha} • {p.hora}</div>
             </div>
 
@@ -104,12 +105,12 @@ export default function Home(){
               <button
                 onClick={()=>setAsistire(prev => ({...prev, [p.id]:!prev[p.id] }))}
                 className={`w-full py-3.5 rounded-full text-[12px] font-black mt-3 border-2 transition-all ${
-                  asistire[p.id]? "bg-[#CCFF00] border-[#CCFF00] text-black" : "bg-black border-black text-white"
+                  seleccionado? "bg-[#CCFF00] border-[#CCFF00] text-black" : "bg-black border-black text-white"
                 }`}
               >
-                {asistire[p.id]? "✓ ASISTIRÉ" : "ASISTIRÉ"}
+                {seleccionado? "✓ ASISTIRÉ" : "ASISTIRÉ"}
               </button>
-              <div className="text-[8px] opacity-30 mt-2 text-center">{p.visitas + (asistire[p.id]?1:0)} VISITAS • ACTIVA</div>
+              <div className="text-[8px] opacity-30 mt-2 text-center">{p.visitas + (seleccionado?1:0)} VISITAS • ACTIVA</div>
             </div>
           </div>
         )})}
@@ -117,7 +118,7 @@ export default function Home(){
 
       {modal && (
         <div className="fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4" onClick={()=>setModal(null)}>
-          <div className="bg-[#111] border border-white/20 rounded-[24px] p-5 max-w-sm w-full text-white" onClick={e=>e.stopPropagation()}>
+          <div className="bg-[#111] border border-white/10 rounded-[24px] p-5 max-w-sm w-full text-white" onClick={e=>e.stopPropagation()}>
             <h2 className="font-black text-[20px]">{modal.nombre}</h2>
             <p className="text-[11px] opacity-60">{modal.distrito} • {modal.data.FECHA} • {modal.data.HORA}</p>
             <div className="bg-black rounded-xl p-3 mt-4 text-[11px] space-y-2 border border-white/5">
