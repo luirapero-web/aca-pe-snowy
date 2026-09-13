@@ -24,6 +24,7 @@ export default function Home(){
   const [filtro,setFiltro]=useState("TODOS")
   const [modal,setModal]=useState<any>(null)
   const [asistire, setAsistire] = useState<Record<number, boolean>>({})
+  const [seleccion, setSeleccion] = useState<Record<number, boolean>>({})
 
   const filtradas = useMemo(()=>{
     const hoyISO = new Date().toISOString().slice(0,10)
@@ -66,10 +67,13 @@ export default function Home(){
           </div>
         ) : filtradas.map((p, i)=>{
           const badge = getBadge(p.fechaISO)
-          const seleccionado = asistire[p.id]
+          const activo = seleccion[p.id] || asistire[p.id]
           return (
-          <div key={p.id} className={`bg-white text-black rounded-[24px] overflow-hidden border-[2.5px] ${seleccionado? 'border-[#CCFF00] shadow-[0_0_0_4px_rgba(204,255,0,0.35),0_8px_30px_rgba(0,0,0,0.5)]' : 'border-black shadow-[0_8px_30px_rgba(0,0,0,0.5)]'} ${i % 2 === 0? 'rotate-[-1.5deg]' : 'rotate-[1.5deg]'} hover:rotate-0 active:rotate-0 hover:scale-[1.02] active:scale-[1.02] transition-all duration-300 ease-out will-change-transform`}>
-            <div className="relative cursor-pointer" onClick={()=>setModal(p)}>
+          <div
+            key={p.id}
+            onClick={()=> setSeleccion(prev => ({...prev, [p.id]:!prev[p.id]}))}
+            className={`bg-white text-black rounded-[24px] overflow-hidden border-[2.5px] cursor-pointer ${activo? 'border-[#CCFF00] shadow-[0_0_0_4px_rgba(204,255,0,0.35),0_8px_30px_rgba(0,0,0,0.5)]' : 'border-white shadow-[0_8px_30px_rgba(0,0,0,0.5)]'} ${i % 2 === 0? 'rotate-[-1.5deg]' : 'rotate-[1.5deg]'} hover:rotate-0 active:rotate-0 hover:scale-[1.02] active:scale-[1.02] transition-all duration-300 ease-out will-change-transform`}>
+            <div className="relative" onClick={(e)=>{e.stopPropagation(); setModal(p)}}>
               <img src={p.img} className="h-[210px] w-full object-cover"/>
               <div className="absolute top-3 left-3 flex gap-1">
                 <span className="bg-black text-white text-[9px] px-2.5 py-1 rounded-full font-black">{p.distrito}</span>
@@ -82,7 +86,7 @@ export default function Home(){
 
             <div className="p-4">
               <div className="flex justify-between items-start">
-                <h3 className="font-black text-[17px] leading-none cursor-pointer" onClick={()=>setModal(p)}>{p.nombre}</h3>
+                <h3 className="font-black text-[17px] leading-none">{p.nombre}</h3>
                 <span className="bg-black text-white px-2 py-0.5 rounded-full text-[8px] font-black">{p.tipo}</span>
               </div>
               <div className="text-[11px] opacity-60 mt-1"> • {p.lugar}</div>
@@ -103,14 +107,18 @@ export default function Home(){
               </div>
 
               <button
-                onClick={()=>setAsistire(prev => ({...prev, [p.id]:!prev[p.id] }))}
+                onClick={(e)=>{
+                  e.stopPropagation();
+                  setAsistire(prev => ({...prev, [p.id]:!prev[p.id] }));
+                  setSeleccion(prev => ({...prev, [p.id]: true}));
+                }}
                 className={`w-full py-3.5 rounded-full text-[12px] font-black mt-3 border-2 transition-all ${
-                  seleccionado? "bg-[#CCFF00] border-[#CCFF00] text-black" : "bg-black border-black text-white"
+                  asistire[p.id]? "bg-[#CCFF00] border-[#CCFF00] text-black" : "bg-black border-black text-white"
                 }`}
               >
-                {seleccionado? "✓ ASISTIRÉ" : "ASISTIRÉ"}
+                {asistire[p.id]? "✓ ASISTIRÉ" : "ASISTIRÉ"}
               </button>
-              <div className="text-[8px] opacity-30 mt-2 text-center">{p.visitas + (seleccionado?1:0)} VISITAS • ACTIVA</div>
+              <div className="text-[8px] opacity-30 mt-2 text-center">{p.visitas + (asistire[p.id]?1:0)} VISITAS • ACTIVA</div>
             </div>
           </div>
         )})}
