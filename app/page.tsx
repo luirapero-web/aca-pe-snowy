@@ -117,7 +117,7 @@ export default function Home(){
 
       {modal && (
         <div className="fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4" onClick={()=>setModal(null)}>
-          <div className="bg-[#111] border border-white/10 rounded-[24px] p-5 max-w-sm w-full text-white" onClick={e=>e.stopPropagation()}>
+          <div className="bg-[#111] border border-white/20 rounded-[24px] p-5 max-w-sm w-full text-white" onClick={e=>e.stopPropagation()}>
             <h2 className="font-black text-[20px]">{modal.nombre}</h2>
             <p className="text-[11px] opacity-60">{modal.distrito} • {modal.data.FECHA} • {modal.data.HORA}</p>
             <div className="bg-black rounded-xl p-3 mt-4 text-[11px] space-y-2 border border-white/5">
